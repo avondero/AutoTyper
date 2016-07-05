@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Xml.Linq;
 using System.Resources;
 using AutoTyper.Properties;
+using System.Reflection;
 
 namespace AutoTyper
 {
@@ -31,7 +32,8 @@ namespace AutoTyper
         {
             InitializeComponent();
 
-            _scenario = scenario;            
+            this.Text = $"AutoTyper (V{Assembly.GetExecutingAssembly().GetName().Version})";
+            _scenario = scenario;
         }
 
         static readonly List<string> FUNCTION_KEYS = new List<string> { "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8", "F9", "F10", "F11", "F12" };
@@ -40,6 +42,8 @@ namespace AutoTyper
         {
             try
             {
+                _typer_Stopped(null, null);
+
                 // Dispose old autotyper first
                 if (_typer != null) _typer.Dispose();
 
@@ -61,6 +65,8 @@ namespace AutoTyper
                 _typer.Started += _typer_Started;
                 _typer.Stopped += _typer_Stopped;
                 _typer.KeyStroke += _typer_KeyStroke;
+                _typer.NbOfLettersTypedChanged += _typer_NbOfLettersTypedChanged;
+                RemoveSelectionColor();
 
                 return true;
             }
@@ -69,7 +75,12 @@ namespace AutoTyper
                 MessageBox.Show($"Error while reading config file '{file}'\r\n{ex.Message}", MSGBOX_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            
+
+        }
+
+        private void _typer_NbOfLettersTypedChanged(object sender, int e)
+        {
+            txtNbLettersTyped.Value = e;
         }
 
         private void _typer_KeyStroke(object sender, int e)
@@ -80,15 +91,17 @@ namespace AutoTyper
 
         private void _typer_Stopped(object sender, EventArgs e)
         {
-            lblInfo.Text = "AutoTyper stopped. Start scenario using function keys (F1-F12)";
+            lblInfo.Text = "AutoTyper stopped.Start scenario using Ctrl + Shift + function key(F1 - F12)";
             niTaskBar.Text = $"AutoTyper - Stopped";
             niTaskBar.Icon = Resources.AutoTyper;
+            cboKey.Enabled = true;
         }
 
         private void _typer_Started(object sender, int e)
         {
-            lblInfo.Text = "AutoTyper started. Change scenario using function keys (F1-F12)";
+            lblInfo.Text = "AutoTyper started. Change scenario using Ctrl + Shift + function key(F1 - F12)";            
             cboKey.SelectedIndex = e;
+            cboKey.Enabled = false;
             rtbTextToType.SelectAll();
             rtbTextToType.SelectionBackColor = rtbTextToType.BackColor;
             string firstChars = rtbTextToType.Text.Length > 20 ? rtbTextToType.Text.Substring(0, 20) + "..." : rtbTextToType.Text;
@@ -132,12 +145,19 @@ namespace AutoTyper
                     niTaskBar.Icon = Resources.F12;
                     break;
             }
-            
+
         }
 
         private void cboKey_SelectedIndexChanged(object sender, EventArgs e)
         {
+            RemoveSelectionColor();
             rtbTextToType.Text = _autoTypedText[cboKey.SelectedIndex];
+        }
+
+        private void RemoveSelectionColor()
+        {
+            rtbTextToType.SelectAll();
+            rtbTextToType.SelectionBackColor = rtbTextToType.BackColor;
         }
 
         private void btnLoadScenarii_Click(object sender, EventArgs e)
@@ -164,11 +184,11 @@ namespace AutoTyper
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
+            Debug.WriteLine("MainForm_Resize : FormWindowState = " + this.WindowState);
             switch (this.WindowState)
             {
                 case FormWindowState.Minimized:
                     this.ShowInTaskbar = false;
-                    this.Hide();
                     break;
                 case FormWindowState.Normal:
                     this.ShowInTaskbar = true;
@@ -185,6 +205,16 @@ namespace AutoTyper
         private void MainForm_Load(object sender, EventArgs e)
         {
             if (!InitializeAutoTyper(_scenario)) this.Close();
+        }
+
+        private void mnuOpenWindow_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Normal;
+        }
+
+        private void txtNbLettersTyped_ValueChanged(object sender, EventArgs e)
+        {
+            _typer.NbOfLettersTyped = (int)txtNbLettersTyped.Value;
         }
     }
 }
