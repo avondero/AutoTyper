@@ -1,4 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <Autotyper>
   <Key value="F1">
     <![CDATA[I like the F1 key]]>
@@ -37,13 +38,13 @@
   </Key>
   <Key value="F9">
     <!-- Excel formula -->
-      <![CDATA[=D15+B15+(E9-$D$11) / F14 * 23]]>
+    <![CDATA[=D15+B15+(E9-$D$11) / F14 * 23]]>
   </Key>
   <Key value="F10">
     <!-- complex Url -->
     <![CDATA[https://www.google.fr/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=long%20url]]>
   </Key>
-  <Key value="F11">    
+  <Key value="F11">
     <![CDATA['Excel VBA Code
     Sub MacroTest()
     Dim i As Integer

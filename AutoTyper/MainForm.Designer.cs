@@ -7,18 +7,6 @@
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Nettoyage des ressources utilisées.
-        /// </summary>
-        /// <param name="disposing">true si les ressources managées doivent être supprimées ; sinon, false.</param>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
 
         #region Code généré par le Concepteur Windows Form
 
@@ -77,7 +65,7 @@
             this.cboKey.Name = "cboKey";
             this.cboKey.Size = new System.Drawing.Size(164, 24);
             this.cboKey.TabIndex = 0;
-            this.cboKey.SelectedIndexChanged += new System.EventHandler(this.cboKey_SelectedIndexChanged);
+            this.cboKey.SelectedIndexChanged += new System.EventHandler(this.CboKey_SelectedIndexChanged);
             // 
             // btnLoadScenarii
             // 
@@ -88,7 +76,7 @@
             this.btnLoadScenarii.TabIndex = 2;
             this.btnLoadScenarii.Text = "Load scenarii";
             this.btnLoadScenarii.UseVisualStyleBackColor = true;
-            this.btnLoadScenarii.Click += new System.EventHandler(this.btnLoadScenarii_Click);
+            this.btnLoadScenarii.Click += new System.EventHandler(this.BtnLoadScenarii_Click);
             // 
             // rtbTextToType
             // 
@@ -109,7 +97,7 @@
             this.niTaskBar.Icon = ((System.Drawing.Icon)(resources.GetObject("niTaskBar.Icon")));
             this.niTaskBar.Text = "AutoTyper - Stopped";
             this.niTaskBar.Visible = true;
-            this.niTaskBar.DoubleClick += new System.EventHandler(this.niTaskBar_DoubleClick);
+            this.niTaskBar.DoubleClick += new System.EventHandler(this.NiTaskBar_DoubleClick);
             // 
             // mnuNotifyIcon
             // 
@@ -126,21 +114,21 @@
             this.mnuOpenWindow.Name = "mnuOpenWindow";
             this.mnuOpenWindow.Size = new System.Drawing.Size(176, 26);
             this.mnuOpenWindow.Text = "Open window";
-            this.mnuOpenWindow.Click += new System.EventHandler(this.mnuOpenWindow_Click);
+            this.mnuOpenWindow.Click += new System.EventHandler(this.MnuOpenWindow_Click);
             // 
             // mnuLoadScenarii
             // 
             this.mnuLoadScenarii.Name = "mnuLoadScenarii";
             this.mnuLoadScenarii.Size = new System.Drawing.Size(176, 26);
             this.mnuLoadScenarii.Text = "Load scenarii";
-            this.mnuLoadScenarii.Click += new System.EventHandler(this.btnLoadScenarii_Click);
+            this.mnuLoadScenarii.Click += new System.EventHandler(this.BtnLoadScenarii_Click);
             // 
             // mnuQuit
             // 
             this.mnuQuit.Name = "mnuQuit";
             this.mnuQuit.Size = new System.Drawing.Size(176, 26);
             this.mnuQuit.Text = "Quit";
-            this.mnuQuit.Click += new System.EventHandler(this.mnuQuit_Click);
+            this.mnuQuit.Click += new System.EventHandler(this.MnuQuit_Click);
             // 
             // txtNbLettersTyped
             // 
@@ -164,7 +152,7 @@
             0,
             0,
             0});
-            this.txtNbLettersTyped.ValueChanged += new System.EventHandler(this.txtNbLettersTyped_ValueChanged);
+            this.txtNbLettersTyped.ValueChanged += new System.EventHandler(this.TxtNbLettersTyped_ValueChanged);
             // 
             // label1
             // 
